@@ -42,7 +42,7 @@ To get started with the application, you must first ensure that all necessary Py
 pip install PyMuPDF scikit-learn numpy matplotlib spacy reportlab pandas  
 python \-m spacy download en\_core\_web\_sm
 
-You can also use the “requrement.txt” file that came downloaded with the program just do the following:  
+You can also use the “requrement.txt” file that comes downloaded with the program just do the following:  
 1\.  Install the python version that matches your computer’s operating system (OS) from:  
  [https://www.python.org/downloads/](https://www.python.org/downloads/)  
 2\. Run this command in terminal:  
