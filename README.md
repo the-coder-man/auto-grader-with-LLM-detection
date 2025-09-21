@@ -41,33 +41,9 @@ Upon completion of the analysis, the application generates a comprehensive repor
 ### **Installation and Dependencies**
 
 To get started with the application, you must first ensure that all necessary Python libraries are installed. The core dependencies include PyMuPDF for handling PDF files, scikit-learn and numpy for the machine learning components, matplotlib for graphing, spacy for advanced text preprocessing, and pandas for data handling. While some of these may already be on your system, it is recommended to install them all to avoid conflicts. You can use the following commands in your terminal to install the required packages and the English language model for spaCy:  
-pip install PyMuPDF scikit-learn numpy matplotlib spacy reportlab pandas  
-python \-m spacy download en\_core\_web\_sm
+pip install PyMuPDF scikit-learn numpy matplotlib spacy reportlab pandas
 
-You can also use the “requrement.txt” file that comes downloaded with the program just do the following:  
-1\.  Install the python version that matches your computer’s operating system (OS) from:  
- [https://www.python.org/downloads/](https://www.python.org/downloads/)  
-2\. Run this command in terminal:  
-python \-m venv venv  
-    source venv/bin/activate  
-3\. Run this in terminal:    
-pip install \-r path/to/requirements.txt  
-Or   
-pip3 install \-r path/to/requirements.txt  
-Replace “path/to/ ”with the actual directory path to the downloaded requirements.txt file.  
-4\. Run the following commands in terminal depending on your python version that you have installed:   
-python \-m spacy download en\_core\_web\_sm  
-Or   
-python3 \-m spacy download en\_core\_web\_sm  
-5\. Run this in terminal:  
-Python path/to/auto grader.py  
-Or   
-Python3 path/to/auto grader.py  
-Replace “path/to/” with the actual directory path to the downloaded auto grader.py file.  
- 
-
- 
-
+you cna find out more here: [more info.](https://github.com/the-coder-man/auto-grader-with-LLM-detection/blob/main/Getting%20Started_%20Installing%20Python%20and%20Libraries.md)
 ### **User Guide**
 
 Using the application is a straightforward process. First, launch the application by running the auto\_grader.py script from your terminal. If it's your first time, follow the on-screen prompts to set up the LLM detection model. In the main window, you will find several key controls. Begin by entering a **Class Name** to categorize your analysis data. Next, use the two "Upload PDF" buttons to select the student's test and the corresponding answer key from your computer. Once both files are selected, click the **"Analyze & Grade"** button. The application will process the files and display a full report in the text box below. You can then use the **"Generate Graph"** button to visualize your data, and the **"Save Report"** button to save the analysis as a separate file. Finally, if you acquire more training data, you can use the **"Add Training Data"** button to retrain the model and enhance its accuracy.
