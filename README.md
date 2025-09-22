@@ -41,9 +41,10 @@ Before running the application, you must have Python installed. The easiest way 
 2. Open your terminal or command prompt.  
 3. Run the following command to install all the required libraries at once.  
    pip install \-r requirements.txt
+   
+**Note:** this program will automatically check for en_core_web_sm and then attempt to auto-install python \-m spacy download en\_core\_web\_sm if it's not found. however if you encounter an error when the program attempts to install en_core_web_sm. you will have to do it manually from your computer's command prompt or terminal you can do that by running:
 
-4. Finally, download the required English language model for spacy:  
-   python \-m spacy download en\_core\_web\_sm
+python \-m spacy download en\_core\_web\_sm
 
 ### **Running the Application**
 
