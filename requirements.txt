@@ -1,7 +1,0 @@
-﻿fitz
-scikit-learn
-numpy
-matplotlib
-spacy
-pandas
-reportlab
