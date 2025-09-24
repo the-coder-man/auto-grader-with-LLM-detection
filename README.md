@@ -55,6 +55,8 @@ python \-m spacy download en\_core\_web\_sm
    * **Upload a CSV file:** If you have a CSV file with two columns (one for text and one for labels, 0 for human and 1 for AI), you can train the model on this custom, structured data. This is ideal if you have a pre-existing dataset.
 
      the link to the dataset that I used can be found here: [link](https://www.kaggle.com/datasets/shanegerami/ai-vs-human-text)
+     
+     for a more advanced dataset download it from  [here!](https://www.kaggle.com/datasets/navjotkaushal/human-vs-ai-generated-essays) 
   
    * **Select a folder:** You can select a folder containing .txt or .pdf files. The application will automatically label files based on their names (e.g., human-essay.txt or ai-report.pdf). This option is perfect for quickly training the model with your own collection of student work.  
 3. **Use the GUI:** The main window provides a simple, intuitive interface for all the application's features.  
