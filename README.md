@@ -64,7 +64,7 @@ python \-m spacy download en\_core\_web\_sm
    * Use the **"Data Visualization"** section to generate graphs showing class performance or LLM confidence over time. This visual data can help you identify trends or areas of concern at a glance.  
    * Click **"Add Training Data"** to train the model with new text data. This allows you to continuously improve the model's accuracy over time.  
    * Click **"Save Report"** to export the analysis report as a .txt or .pdf file. This is useful for sharing a student's results with them or for your own record-keeping.
-
+**note:** if you need more information about installing and using auto grader [watch this video](https://youtu.be/EeutOo8gODI)
 ## **Application in a Modern School Setting**
 
 This tool can be seamlessly integrated into an educator's workflow to save time and provide valuable insights beyond a simple grade. It goes beyond a quick fix and offers a data-driven approach to teaching.
