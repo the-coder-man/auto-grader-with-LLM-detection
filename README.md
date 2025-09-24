@@ -52,7 +52,10 @@ python \-m spacy download en\_core\_web\_sm
    python "Auto grader.py"
 
 2. **Initial Setup:** The first time you run the application, it will prompt you to train the LLM detection model. This is a crucial one-time setup step. You have two options:  
-   * **Upload a CSV file:** If you have a CSV file with two columns (one for text and one for labels, 0 for human and 1 for AI), you can train the model on this custom, structured data. This is ideal if you have a pre-existing dataset.  
+   * **Upload a CSV file:** If you have a CSV file with two columns (one for text and one for labels, 0 for human and 1 for AI), you can train the model on this custom, structured data. This is ideal if you have a pre-existing dataset.
+
+     the link to the dataset that I used can be found here: [link](https://www.kaggle.com/datasets/shanegerami/ai-vs-human-text)
+  
    * **Select a folder:** You can select a folder containing .txt or .pdf files. The application will automatically label files based on their names (e.g., human-essay.txt or ai-report.pdf). This option is perfect for quickly training the model with your own collection of student work.  
 3. **Use the GUI:** The main window provides a simple, intuitive interface for all the application's features.  
    * Enter a **Class Name** to organize your analysis results. This allows you to easily track performance for different groups of students.  
