@@ -1,7 +1,0 @@
-﻿scikit-learn 
-numpy 
-pandas 
-matplotlib
-PyPDF2 
-Reportlab
-spacy
