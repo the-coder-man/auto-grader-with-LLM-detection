@@ -13,7 +13,7 @@ Its core mission is to solve the pervasive problem of subjective and time-consum
 Crucially, the Auto Grader directly addresses modern challenges in content integrity by integrating a robust **AI-Generated Text Detection** module. This feature is a vital tool for maintaining academic and content integrity by helping users objectively identify submissions potentially created by Large Language Models (LLMs). By automating the preliminary review, scoring, and originality checks, the Auto Grader aims to dramatically streamline the assessment workflow. This frees up instructors to focus their energy on creating more engaging lessons and providing meaningful, personalized support to students, fundamentally transforming grading from a repetitive burden into a focused, objective process. The resulting benefit is not just a substantial time savings, but also ensuring **consistency and fairness** in scoring across entire classes and teams. 
 
 **Setup and Installation** 
-
+**Note: if you need more infomation about how to install Auto grader please refer to this: [YouTube video](https://m.youtube.com/watch?v=dqzF_r_3B9w&t=10s)
 To get the Auto Grader up and running smoothly, you need a stable **Python environment** (version 3.8 or higher is highly recommended). Since the application relies on Python's standard libraries and highly portable, cross-platform machine learning tools, it is fully compatible with **Windows, macOS, and Linux** operating systems. 
 
 **1\. Save Files and Virtual Environment Setup (Recommended)** Before installing any project dependencies, it is best practice to create and activate a **virtual**  
