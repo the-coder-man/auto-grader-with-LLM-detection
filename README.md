@@ -1,169 +1,450 @@
-**Auto Grader** 
+# Auto Grader
 
-**Overview and Core Purpose** 
+A desktop application for educators that provides automated grading functionality for student assignments. The application offers multiple grading methods, plagiarism detection, and AI-generated text detection capabilities.
 
-The Auto Grader is a highly practical desktop application built entirely with **Python** and the native **Tkinter** library. It is designed to be a powerful, cross-platform utility for anyone managing and assessing large volumes of written content—specifically educators across K-12 and higher education, corporate trainers running certification programs, and content quality managers in publishing. 
+## Table of Contents
 
-Its core mission is to solve the pervasive problem of subjective and time-consuming manual grading, which often leads to instructor burnout and delays in student feedback. The application achieves this by offering a flexible, **dual-pronged assessment system** that allows the user to choose the right tool for the job: 
+- [Features](#features)
+- [Setup](#setup)
+  - [Setup Script](#setup-script-recommended)
+  - [Manual Installation](#manual-installation)
+- [How to Use](#how-to-use)
+- [Feature Details](#feature-details)
+  - [PDF Upload](#pdf-upload)
+  - [Keyword-Based Grading](#keyword-based-grading)
+  - [AI-Assisted Grading](#ai-assisted-grading)
+  - [Plagiarism Detection](#plagiarism-detection)
+  - [AI Text Detection](#ai-text-detection)
+  - [Report Generation](#report-generation)
 
-1\. A rapid, objective **Keyword-Based Grading** engine, perfect for factual recall, technical document review, and checklist-style assessments. This mode offers immediate, black-and-white scoring based purely on the presence of essential terms. 
+---
 
-2\. A more nuanced, sophisticated **AI-Assisted Grading** method, which uses specialized, modern AI technology to evaluate complex criteria like critical thinking, structural coherence, persuasive argument strength, and overall writing quality. This goes beyond simple counting to offer true analytical feedback. 
+## Features
 
-Crucially, the Auto Grader directly addresses modern challenges in content integrity by integrating a robust **AI-Generated Text Detection** module. This feature is a vital tool for maintaining academic and content integrity by helping users objectively identify submissions potentially created by Large Language Models (LLMs). By automating the preliminary review, scoring, and originality checks, the Auto Grader aims to dramatically streamline the assessment workflow. This frees up instructors to focus their energy on creating more engaging lessons and providing meaningful, personalized support to students, fundamentally transforming grading from a repetitive burden into a focused, objective process. The resulting benefit is not just a substantial time savings, but also ensuring **consistency and fairness** in scoring across entire classes and teams. 
+- **Multiple Grading Methods**: Choose between keyword-based, AI-assisted grading, or plagiarism detection
+- **Plagiarism Detection**: Web search and AI-powered paraphrase detection to identify copied content
+- **PDF Support**: Upload and extract text from PDF documents
+- **AI-Powered Grading**: Uses SmolLM2 language model for intelligent assessment
+- **AI Text Detection**: Identify potentially AI-generated content in submissions
+- **Detailed Reports**: Generate downloadable reports in TXT and PDF formats
+- **Letter Grades**: Automatic conversion of scores to letter grades (A-F) with percentages
+- **Progress Tracking**: Real-time progress indicators for long-running operations
+- **Non-Blocking Interface**: Background processing keeps the application responsive
 
-**Setup and Installation**
+---
 
-**Note: if you need more infomation about how to install Auto grader please refer to this: [YouTube video](https://m.youtube.com/watch?v=dqzF_r_3B9w&t=10s)**
+## Setup
 
-To get the Auto Grader up and running smoothly, you need a stable **Python environment** (version 3.8 or higher is highly recommended). Since the application relies on Python's standard libraries and highly portable, cross-platform machine learning tools, it is fully compatible with **Windows, macOS, and Linux** operating systems. 
+### Requirements
 
-**1\. Save Files and Virtual Environment Setup (Recommended)** Before installing any project dependencies, it is best practice to create and activate a **virtual**  
-**environment**. This is essential professional practice because it isolates the project's required libraries, preventing version conflicts with other Python software you may have installed on your system. 
+- Python 3.11 or higher
+- Internet connection (for first-time model downloads)
 
-● **Step 1.1:** Ensure the main script (auto grader.py) and the dependency list (requirements.txt) are saved together in a dedicated project folder (e.g., AutoGrader\_Project). 
+### Setup Script (Recommended)
 
-● **Step 1.2:** Open your terminal or command prompt in that specific folder and run the following commands to set up and enter the isolated virtual environment: \# Create the environment (name it 'venv') 
+The included `setup.sh` script automates the entire installation process. Run it with:
 
-python \-m venv venv 
+```bash
+chmod +x setup.sh
+./setup.sh
+```
 
-\# Activate the environment 
+#### What the Setup Script Does
 
-\# For Windows: 
+**Step 1: Operating System Detection**
 
-.\\venv\\Scripts\\activate 
+The script automatically detects your operating system:
+- Linux (all distributions)
+- macOS (Intel and Apple Silicon)
+- Windows (via Git Bash, Cygwin, or MSYS)
 
-\# For macOS/Linux: 
+**Step 2: Package Manager Detection**
 
-source venv/bin/activate 
+The script finds your system's package manager:
 
-Once successfully activated, your terminal prompt will change to show (venv) at the beginning, confirming that any subsequent installations will be confined to this isolated project environment. 
+| Operating System | Supported Package Managers |
+|------------------|---------------------------|
+| Linux | apt (Debian/Ubuntu), dnf (Fedora), yum (CentOS/RHEL), pacman (Arch), zypper (openSUSE), apk (Alpine), nix |
+| macOS | Homebrew, MacPorts |
+| Windows | Chocolatey, Scoop, Winget |
 
-**2\. Install Dependencies** 
+**Step 3: Automatic Homebrew Installation (macOS)**
 
-All necessary open-source libraries—which range from the GUI framework to the machine learning core and PDF generation tools—are meticulously listed in the requirements.txt file. You can install everything required with one simple command. 
+On macOS, if no package manager is found, the script offers to install Homebrew automatically:
+- Installs Xcode Command Line Tools (required prerequisite)
+- Downloads and runs the official Homebrew installer
+- Configures PATH for Apple Silicon Macs (M1/M2/M3)
+- Verifies the installation was successful
 
-pip install \-r requirements.txt 
+**Step 4: Python Installation**
 
-This single command will pull the required versions of scikit-learn, PyPDF2, torch, transformers, and the rest of the stack. 
+If Python 3 is not found on your system:
+- The script asks if you want to install it
+- Uses your detected package manager to install Python
+- Also installs pip and tkinter (required for the GUI)
 
-*Note on NLTK Data and Efficiency:* The application relies on the Natural Language Toolkit (**NLTK**) for essential text processing tasks. Specifically, the application automatically attempts to download the punkt dataset during its very first execution. This component is crucial for **tokenization**—the process of accurately breaking down large bodies of text into smaller, meaningful units like sentences and words. Accurate tokenization is foundational for both the precise keyword matching and the sophisticated numerical analysis required by the AI models. 
+**Step 5: Virtual Environment (Optional)**
 
-**3\. Run the Application**  
-With your virtual environment active and all dependencies verified and installed, you can launch the desktop application from the terminal: 
+The script asks if you want to create an isolated Python environment:
+- Creates a `venv` folder in the project directory
+- Activates the environment automatically
+- Keeps your system Python clean
+- Provides instructions for future activation
 
-python "auto grader.py" 
+**Step 6: Dependency Installation**
 
-The application's native graphical user interface (GUI) window will open immediately. This provides a clean workspace ready for assignment input and the selection of your desired grading method. If the application encounters an error during startup, the most common issues relate to dependency installation or the virtual environment not being active; in such a 
+Installs all required Python packages from `requirements.txt`:
+- PyPDF2 (PDF text extraction)
+- nltk (natural language processing)
+- scikit-learn (machine learning)
+- transformers & torch (AI models)
+- reportlab (PDF report generation)
 
-case, please double-check those two points. 
+**Step 7: Launch Application**
 
-**Core Features and How to Use** 
+After setup completes, the script offers to run the Auto Grader immediately.
 
-The application is engineered around a structured, four-step workflow designed for user efficiency: **Input, Selection, Processing, and Reporting.** 
+#### Example Output
 
-**Assignment Input and Text Management** 
+```
+========================================
+     Auto Grader Setup Script
+========================================
 
-The interface prioritizes maximum flexibility for getting the student's text into the system quickly: 
+[1/6] Detecting operating system...
+      Detected: macOS
 
-● **Direct Text Entry:** This is the quickest option for immediate analysis. Use the large, scrollable text input area for grading very short responses, checking code comments, or analyzing text copied from an email or a web source. The ScrolledText widget handles large documents gracefully. 
+[2/6] Detecting package manager...
+      Detected: Homebrew
 
-● **PDF Upload (Automation Focus):** The "Upload Assignment PDF" button handles the most common academic submission format. The application uses the robust **PyPDF2** library to automatically read and extract the clean, raw text from the document. This feature is a massive time-saver, as it intelligently bypasses common formatting issues found in PDFs, eliminating the need for the user to manually copy/paste, which can sometimes introduce errors. 
+[3/6] Checking for Python installation...
+      Found: Python 3.11.5
 
-**1\. Keyword-Based Grading (Quantitative and Objective)** 
+[4/6] Virtual Environment Setup
+      Would you like to create a Python virtual environment? (y/n): y
+      Virtual environment created and activated!
 
-This is the system's objective, quantitative assessment mode, ensuring absolute consistency in scoring based purely on the presence or absence of specific content. 
+[5/6] Installing Python dependencies...
+      All dependencies installed successfully!
 
-● **How it Works (The Preprocessing Pipeline):** After selecting the **Keyword-based** radio button, the system initiates a rigorous preprocessing step. This typically includes converting all submitted text to lowercase and removing common punctuation (normalization). This ensures a robust, **case-insensitive matching** process. For example, the system will correctly recognize and score "Chlorophyll," "CHLOROPHYLL," and "chlorophyll" equally. 
+[6/6] Setup Complete!
+========================================
+      Setup completed successfully!
+========================================
 
-● **Input and Scoring Logic (The Grading Recipe):** The user defines the exact terms and their assigned values (e.g., photosynthesis:10, chlorophyll:5, light-dependent:15). This  
-input acts as a digital checklist with a dynamic scoring system: if the keyword is detected anywhere in the submission, the corresponding points are instantly awarded. This method is perfect for large classes where grading consistency is paramount. 
+Would you like to run the Auto Grader application now? (y/n):
+```
 
-● **Result and Feedback:** A concise, easily digestible report is generated. Critically, it does more than just show the total score; it explicitly lists *which* of the required keywords were detected and, just as importantly, *which were missing*. This provides clear, unambiguous, binary feedback on factual recall, making it easy for students to understand exactly why points were deducted. 
+---
 
-**2\. AI-Assisted Grading (Qualitative and Nuanced)** 
+### Manual Installation
 
-This is the most advanced, qualitative method designed for assessing nuanced writing skills, critical thinking, and adherence to complex, multi-layered rubrics. 
+1. **Clone or download the project**
 
-● **The AI Engine:** The system utilizes the **SmolLM2-360M-Instruct** model. The strategic choice of a *small* language model is a key architectural decision: this model is optimized for **rapid inference** and **local operation**, meaning the sophisticated analysis is both fast and guarantees that the grading process does not rely on external, third-party cloud services for maximum data privacy and low latency. 
+2. **Create a virtual environment (optional but recommended)**
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-● **Input and Custom Criteria (Rubric Execution):** You must provide detailed, **multi-faceted instructions** that accurately reflect a full, human-designed grading rubric. These instructions can cover abstract concepts. Examples include: "Evaluate the tone for professionalism (0-10 points)," "Assess the logical flow and transition quality between paragraphs (0-40 points)," or a comprehensive breakdown like: "Grade on clarity of thesis (40 points), evidence supporting the argument (30 points), adherence to Chicago style citation format (20 points), and strength of the conclusion (10 points). The maximum score is 100 points." 
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-● **Result and High-Quality Feedback:** The AI model processes the text against these weighted, detailed instructions. It delivers a precise numeric score, but the most powerful element is the **targeted textual feedback**. This narrative explains *why* the student received their score, often pointing out specific structural weaknesses (e.g., "Weak transition in paragraph 3") or areas where evidence was strong. This detailed, immediate, and high-quality feedback significantly enhances a student's revision and learning process. 
+4. **Run the application**
+   ```bash
+   python "auto grader.py"
+   ```
 
-**3\. AI-Generated Text Detection (Integrity and Verification)** 
+### First-Time Setup Notes
 
-This feature is a critical security layer aimed at helping users uphold academic honesty and content originality by providing an objective, statistical assessment of text origin. 
+- **SmolLM2 Model**: On first launch, the application will automatically download the SmolLM2 language model (~360MB). This only happens once.
+- **AI Detection Model**: Before using AI text detection, you must train the model by clicking "Train AI Model". This downloads training data from HuggingFace and trains a classifier. This only needs to be done once - the model is saved for future sessions.
+- **NLTK Data**: The application automatically downloads required NLTK data (punkt tokenizer) on startup.
 
-● **Prerequisite (The Crucial One-Time Training):** The heart of this feature is a custom-trained machine learning classifier. You **must** click the "Train LLM Detection Model" button once. This process is complex and time-intensive due to the necessary data download and training, but it runs in a **non-blocking thread**, ensuring the GUI remains responsive while the work is done in the background. The training pipeline involves:  
-1\. **Data Acquisition:** Downloading the extensive 
+---
 
-**ahmadreza13/human-vs-Ai-generated-dataset** (a large-scale, categorized dataset). 
+## How to Use
 
-2\. **Vectorization:** Using the **TfidfVectorizer** to convert millions of text examples into numerical feature vectors. This mathematical process captures the statistical importance and frequency of words, essential for pattern recognition. 
+### Basic Workflow
 
-3\. Model Training: Training a high-performance classifier (like Logistic Regression or SGD) to find subtle, distinguishing patterns between human writing styles and the synthetic outputs of LLMs. 
+1. **Enter or Upload Text**: Type student text directly into the text area, or click "Upload Assignment PDF" to load a PDF document.
 
-Once training is complete, the model files (llm\_model.joblib and llm\_vectorizer.joblib) are saved locally using joblib and automatically loaded on every subsequent launch, making the detection process instant thereafter. 
+2. **Select Grading Method**: Choose either:
+   - **Keyword-based Grading** for objective, keyword-focused assessments
+   - **AI-Assisted Grading** for subjective, quality-focused evaluations
 
-● **Detection Process and Interpretation:** Click **Detect AI Text** to analyze the text currently in the input box. The system provides a clear prediction ("AI-Generated" or "Human-Written") and a decisive **confidence score** (e.g., 92% confidence). Users are strongly advised to interpret this as guidance: a high confidence score simply flags a text for a closer **human investigation** and discussion with the student, as no AI detection tool is 100% accurate or infallible. This promotes transparency and fair practice. 
+3. **Configure Grading Criteria**:
+   - For keyword grading: Enter keywords and point values
+   - For AI grading: Provide instructions describing your evaluation criteria
 
-**4\. Detailed Report Generation (Archiving and Communication)** 
+4. **Grade the Assignment**: Click "Grade Assignment" to process the submission.
 
-Record-keeping and clear communication of results are absolutely essential for any formal assessment. A detailed, multi-section report is generated automatically after every successful grading cycle. 
+5. **View Results**: Results appear in the application and a detailed report window opens automatically with download options.
 
-● **Report Content:** The report is comprehensive, capturing the assignment's metadata, the chosen grading method (Keyword or AI), the final score, and a complete breakdown of the results. This includes either the explicit list of found/missing keywords or the full narrative feedback and analysis provided by the AI model. 
+---
 
-● **Export Options:** The report can be instantly archived in two industry-standard formats for maximum utility: 
+## Feature Details
 
-○ **TXT File:** A clean, minimal file containing the raw text of the report. This is perfect for quick data export, importing into spreadsheets, or viewing in any basic text editor. ○ **PDF File:** A professional, formatted document generated using the **ReportLab** library. This output is ideal for official school records, emailing to students or parents, or printing out for paper records, ensuring a polished presentation. 
+### PDF Upload
 
-**Potential Real-World Applications** 
+Upload PDF documents and automatically extract their text content for grading.
 
-The powerful, dual functionality of the Auto Grader means it is useful far beyond a traditional classroom environment: 
+**How to use:**
+1. Click the "Upload Assignment PDF" button
+2. Select a PDF file from your computer
+3. The extracted text will appear in the text input area
 
-● Higher Education and K-12 (Enhanced): 
+**Supported formats:**
+- Standard PDF documents
+- Multi-page PDFs (all pages are extracted)
 
-For objective tasks (e.g., medical terminology quizzes, history dates, science definitions), the Keyword Grader offers instant assessment. For complex tasks like college-level  
-research papers, the AI-Assisted mode can be used to check against a comprehensive list of formal requirements (e.g., presence of an abstract, specific section headers, or a minimum complexity score), significantly reducing the instructor's initial review time. This allows the teacher to focus their limited time on the quality of ideas, not the basic structure. 
+**Note:** Scanned PDFs or image-based PDFs may not extract properly. For best results, use PDFs with selectable text.
 
-● Corporate Training and HR (Expanded): 
+---
 
-In professional settings, the Keyword Grader is perfect for screening high volumes of job applications or legal contracts for the mandatory presence of required technical skills, certifications, or regulatory clauses. The AI-Assisted feature can grade the clarity, persuasiveness, and effectiveness of employee reports, summaries, or internal communication documents based on company-specific tone and style guidelines, ensuring consistent internal quality. 
+### Keyword-Based Grading
 
-● Content and Publishing Quality Assurance (Critical Screening): 
+A fast, objective grading method that checks for the presence of specific keywords in student submissions and awards points accordingly.
 
-In fast-paced marketing or journalism, the AI Detection module is invaluable. It can be used to pre-screen articles, web copy, and commissioned content for originality before publication. Ensuring that all published material is genuinely human-generated helps to maintain brand reputation, ethical publishing standards, and is increasingly crucial for effective search engine optimization (SEO) performance. 
+**How to use:**
+1. Select "Keyword-based Grading" from the grading method options
+2. Enter your keywords and point values in the format: `keyword:points`
+3. Separate multiple keywords with commas
+4. Click "Grade Assignment"
 
-● Self-Study and Tutoring Centers (Empowerment): 
+**Format examples:**
+```
+photosynthesis:10, chlorophyll:5, carbon dioxide:5
+```
+```
+mitosis:15, cell division:10, chromosomes:5, DNA:10
+```
 
-This application can empower students and learners directly. By allowing them to use the AI-Assisted feature to check their own drafts against the exact criteria of their teacher's rubric, they receive instant, private, and non-judgmental feedback. This helps them improve their revision skills, internalize complex rubric requirements, and develop better critical thinking before the final submission deadline, effectively turning the grading tool into a highly personalized, 24/7 writing tutor. 
+**Scoring:**
+- Each keyword found in the student text awards its full point value
+- Keywords are case-insensitive
+- Final score shows: Total points earned / Maximum possible points
+- Percentage and letter grade are calculated automatically
 
-**Credits and External Components** 
+**Best for:**
+- Vocabulary quizzes
+- Concept checks
+- Technical term assessments
+- Objective evaluations with clear right/wrong answers
 
-The application's advanced capabilities are a powerful example of what can be built using the open-source community, relying on a robust, well-maintained stack of Python libraries and specialized models. 
+---
 
-**Core Libraries (The Desktop Interface and I/O)** 
+### AI-Assisted Grading
 
-● **tkinter:** The foundational Python standard library for all graphical interface elements. It ensures a stable, responsive user experience without needing external, complex GUI frameworks. 
+An intelligent grading method that uses the SmolLM2 language model to evaluate student work based on custom criteria you provide.
 
-● **PyPDF2:** The essential utility for handling PDF files, enabling the smooth and reliable extraction of raw text from student submissions. 
+**How to use:**
+1. Select "AI-Assisted Grading" from the grading method options
+2. Enter your grading instructions describing:
+   - What criteria to evaluate
+   - How to score the work
+   - What constitutes good vs. poor responses
+3. Click "Grade Assignment"
 
-● **reportlab:** This library is dedicated to high-quality document creation, specifically programmatically generating the professional, finalized PDF reports from the grading results. 
+**Example instructions:**
+```
+Evaluate this essay on the American Revolution. Score out of 100 points based on:
+- Historical accuracy (30 points)
+- Use of specific examples (25 points)
+- Clear thesis statement (20 points)
+- Logical organization (15 points)
+- Grammar and spelling (10 points)
+```
 
-● **joblib:** Crucial for **model persistence**. It allows the application to efficiently save the large trained detection model and the TfidfVectorizer to disk, and then instantly load  
-them back up on subsequent runs, avoiding the lengthy one-time training on every user launch. 
+**Output:**
+- Score out of 100
+- Letter grade (A, A-, B+, B, B-, C+, C, C-, D+, D, D-, F)
+- Percentage
+- AI-generated justification explaining the score
 
-**Machine Learning Stack (The Data and Logic)** 
+**Grading Scale:**
+| Grade | Percentage |
+|-------|------------|
+| A     | 93-100%    |
+| A-    | 90-92%     |
+| B+    | 87-89%     |
+| B     | 83-86%     |
+| B-    | 80-82%     |
+| C+    | 77-79%     |
+| C     | 73-76%     |
+| C-    | 70-72%     |
+| D+    | 67-69%     |
+| D     | 63-66%     |
+| D-    | 60-62%     |
+| F     | Below 60%  |
 
-● **scikit-learn:** The backbone of the detection and keyword systems. It provides all the classic machine learning tools, including the high-speed **Logistic Regression** classifier and the powerful **TfidfVectorizer** for turning text into numerical feature vectors by weighting words based on their frequency and importance across the dataset. 
+**Best for:**
+- Essays and written responses
+- Open-ended questions
+- Subjective assessments
+- Quality-focused evaluations
 
-● **nltk (Natural Language Toolkit):** Provides the necessary foundational natural language processing tools, particularly the punkt tokenizer, ensuring accurate word and sentence splitting across diverse texts for reliable analysis. 
+**Note:** The SmolLM2 model (~360MB) downloads automatically on first use.
 
-● **datasets, transformers, and torch:** These libraries form the necessary infrastructure for running the advanced, instruction-tuned AI model. **torch (PyTorch)** provides the deep learning framework that efficiently executes the complex tensor calculations of the smaller **SmolLM2** model, ensuring fast performance even on standard desktop hardware. 
+---
 
-**External Models and Training Data** 
+### Plagiarism Detection
 
-● **AI-Assisted Grading Model:** The core AI engine is the **SmolLM2-360M-Instruct** model, which is instruction-tuned to accurately follow specific, nuanced scoring rules and custom rubrics provided by the user. 
+Detect potential plagiarism in student submissions by searching the web for matching content and using AI to identify paraphrased material that lacks proper citations.
 
-● **AI Detection Training Data:** The binary classifier for detecting AI-generated text is trained on the extensive **ahmadreza13/human-vs-Ai-generated-dataset**. This large, high-quality dataset, sourced from the Hugging Face ecosystem, is what makes the detection model robust and accurate by providing it with millions of examples of both human and machine-generated writing styles.
+**How to use:**
+1. Upload or paste the student's assignment text
+2. Select "Plagiarism Detection" from the grading method options
+3. Enter the assignment topic (e.g., "photosynthesis in plants", "American Revolution")
+4. Optionally check "Enable AI paraphrase detection" to use AI analysis (a warning will appear reminding you to review flagged content manually)
+5. Click "Search the Web for Plagiarism"
+6. Review the detailed report showing potential matches
+
+**How it works:**
+
+1. **Keyword Extraction**: The system extracts important keywords from the student text, ignoring common words like "the", "is", "and", etc.
+
+2. **Web Search**: Uses DuckDuckGo to search for:
+   - Topic + keyword combinations
+   - Exact phrase matches from key sentences
+
+3. **AI Paraphrase Detection**: If the SmolLM2 model is loaded, it analyzes sentences to detect content that appears to be paraphrased from sources without proper citation.
+
+4. **Risk Assessment**: Generates a risk level based on findings:
+   - **LOW**: No web matches and no paraphrase suspects
+   - **LOW-MEDIUM**: 1-4 web matches but no paraphrase concerns
+   - **MEDIUM**: 5+ web matches or 1+ paraphrase suspects
+   - **HIGH**: 10+ web matches or 2+ paraphrase suspects
+
+**Report includes:**
+- Keywords analyzed
+- Web search results with URLs and snippets
+- Matched sentences (if exact phrases found)
+- AI paraphrase analysis results
+- Downloadable TXT report
+
+**Best for:**
+- Essay assignments
+- Research papers
+- Written reports
+- Any text-based submission where originality matters
+
+**Important disclaimer:**
+Plagiarism detection is not definitive. Web search results may include:
+- Legitimate sources the student properly cited
+- Common knowledge or standard terminology
+- False positives from similar topics
+
+Always review flagged content manually before taking action. The AI paraphrase detection is experimental and should be used as guidance, not proof.
+
+---
+
+### AI Text Detection
+
+Detect whether student submissions may contain AI-generated content using a machine learning classifier trained on millions of examples.
+
+**Initial Setup (one-time):**
+1. Click "Train AI Model"
+2. Wait for the training to complete (progress bar shows status)
+3. The model downloads training data from HuggingFace and trains a classifier
+4. Once complete, the model is saved and ready for future sessions
+
+**How to use:**
+1. Enter or upload the text you want to analyze
+2. Click "Detect AI-Generated Text"
+3. View the results showing:
+   - Classification (Human-written or AI-generated)
+   - Confidence percentage
+
+**Important disclaimer:**
+AI detection is not foolproof. This tool provides an estimate based on patterns in the training data, but it can make mistakes. Factors like writing style, topic, and text length can affect accuracy. Use this as one tool among many when evaluating content authenticity.
+
+**Training details:**
+- Uses the `ahmadreza13/human-vs-Ai-generated-dataset` from HuggingFace
+- Trains on 500,000 samples for efficiency
+- Uses TF-IDF vectorization and Logistic Regression
+- Model persists between sessions (no need to retrain)
+
+---
+
+### Report Generation
+
+Both grading methods generate detailed reports that can be viewed and downloaded.
+
+**Report contents:**
+- Timestamp of grading
+- Score and grade information
+- Grading criteria used (keywords or AI instructions)
+- Student submission text
+- Detailed evaluation results
+
+**For Keyword Grading:**
+- List of all keywords checked
+- Points earned for each keyword
+- Total score and percentage
+- Letter grade
+
+**For AI Grading:**
+- Letter grade with percentage
+- Score out of 100
+- AI-generated justification and feedback
+
+**Download options:**
+- **TXT format**: Plain text file for easy viewing and sharing
+- **PDF format**: Professional formatted document suitable for records
+
+**How to download:**
+1. After grading, a report window opens automatically
+2. Click "Download as TXT" or "Download as PDF"
+3. Choose a save location
+4. The report is saved to your selected location
+
+---
+
+## Technical Requirements
+
+| Package | Minimum Version |
+|---------|-----------------|
+| Python | 3.11+ |
+| PyPDF2 | 3.0.0 |
+| nltk | 3.9.1 |
+| joblib | 1.5.1 |
+| scikit-learn | 1.7.1 |
+| datasets | 2.0.0 |
+| transformers | 4.0.0 |
+| torch | 2.0.0 |
+| reportlab | 4.0.0 |
+
+---
+
+## Files Generated
+
+The application creates the following files during use:
+
+- `llm_model.joblib` - Trained AI detection model (after training)
+- `llm_vectorizer.joblib` - Text vectorizer for AI detection (after training)
+
+These files allow the AI detection feature to work immediately on subsequent launches without retraining.
+
+---
+
+## Troubleshooting
+
+**Problem: SmolLM2 model fails to load**
+- Ensure you have a stable internet connection
+- Check that you have sufficient disk space (~360MB)
+- The model downloads automatically; wait for the status message to show "loaded successfully"
+
+**Problem: PDF text extraction returns empty**
+- Ensure the PDF contains selectable text (not scanned images)
+- Try a different PDF viewer to verify the file isn't corrupted
+
+**Problem: AI detection not working**
+- Make sure you've trained the model first (click "Train AI Model")
+- Wait for training to complete (watch the progress bar)
+
+**Problem: Application is slow or unresponsive**
+- Long operations run in background threads; the interface should remain responsive
+- First-time model loading takes longer; subsequent launches are faster
